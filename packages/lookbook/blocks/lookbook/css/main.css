@@ -1,0 +1,3 @@
+.lookbook-prev, .lookbook-next{font-family:'Josefin Sans'; position:relative;z-index:4;top:50%;margin-top:-25px;}
+.lookbook-prev{left:0; float:left;}
+.lookbook-next{right:0; float:right;}

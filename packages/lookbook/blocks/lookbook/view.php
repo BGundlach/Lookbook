@@ -38,20 +38,49 @@
  */
 ?>
 
-<div id="gallery<?php echo $bID ?>">
-	<ul>
-	<?php foreach ($images as $img): ?>
-		<li>
-			<?php echo $img->title ?>:<br />
-			<img src="<?php echo $img->large->src ?>" width="<?php echo $img->large->width ?>" height="<?php echo $img->large->height ?>" alt="" />
-		</li>
-	<?php endforeach; ?>
-	</ul>
+<div id="lookbook<?php echo $bID ?>" class="lookbook-slider" style="width:<?= $maxLargeWidth ?>">
+	<?php 
+	$loops = 0;
+		foreach ($images as $img) {
+			if ($loops < 2){ ?>
+					<img src="<?php echo $img->large->src ?>" />
+	<?php 	} else {
+				break;
+			}
+		$loops = $loops + 1;
+		} 
+	?>
+	<button class="lookbook-prev">&lt;</button>
+	<button class="lookbook-next">&gt;</button>
 </div>
 
+
 <script type="text/javascript">
-$(document).ready(function() {
-	//JQUERY PLUGIN EXAMPLE:
-	//$('#gallery<?php echo $bID ?>').someKindOfGallery();
+$('#lookbook<?php echo $bID ?>').lookbook({
+    speed:800,
+    allowWrap:false,
+    timeout:0,
+    fx:"scrollHorz",
+    maxZ:3,
+    sync:true,
+    prev:".lookbook-prev",
+    next:".lookbook-next",
+    autoHeight:'<?php echo $maxLargeWidth . ":" . $maxLargeHeight; ?>',
+    centerHorz: true,
+    centerVert: true,
+});	
+$(document).ready(function(){
+	var newSlide
+	<?php 
+	$loops = 0;
+		foreach ($images as $img) {
+			if ($loops > 1){ ?>
+				newSlide = '<img src="<?php echo $img->large->src ?>" />';
+				$('#lookbook<?php echo $bID ?>').lookbook('add', newSlide);
+	<?php 	} else {
+	$loops = $loops + 1;
+}
+	} 
+	?>
 });
 </script>
